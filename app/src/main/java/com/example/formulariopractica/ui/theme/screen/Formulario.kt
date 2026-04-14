@@ -36,10 +36,10 @@ fun FormularioScreen() {
     var notasAdicionales by remember { mutableStateOf("") }
 
     val nombreError = nombreCliente.isBlank() || nombreCliente.length <= 3
-    val telError = telCliente.isBlank() || telInt == null || telCliente.length <= 8
+    val telError = telCliente.isBlank() || telInt == null || telCliente.length < 8
     val direccionError = direccionCliente.isBlank()
     val productoError = productoCliente.isBlank()
-    val cantidadError = cantidadCliente.isBlank() || cantidadInt == null || cantidadInt < 0
+    val cantidadError = cantidadCliente.isBlank() || cantidadInt == null || cantidadInt <= 0
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val formularioValido = !nombreError || !telError || !direccionError || !productoError || !cantidadError
@@ -121,7 +121,6 @@ fun FormularioScreen() {
                 label = { Text("Notas Adicionales")},
             )
             Spacer(modifier = Modifier.height(20.dp))
-
             Button( onClick = {
                 scope.launch {
                     snackbarHostState.showSnackbar("Formulario enviado correctamente")
